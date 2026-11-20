@@ -9,6 +9,16 @@
 
 <h2>Evcil Hayvanlar</h2>
 
+
+@* H04: POST işleminden sonra gelen mesajı gösteriyoruz. *@
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
+
+
 @* bootstrap ile tablo oluşturuyoruz *@
 <table class="table table-striped">
     <thead>

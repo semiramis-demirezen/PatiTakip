@@ -1,4 +1,4 @@
-
+using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
 
@@ -45,4 +45,27 @@ public class PetsController : Controller
     {
         return View();
     }
+
+
+    // H04: Formdan gönderilen bilgileri karşılar.
+    // H05: Anti-forgery token ile isteği doğrular.
+    // H06: ModelState ile form verilerini kontrol eder.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(PetCreateViewModel model)
+    {
+        // formda hata varsa aynı sayfayı tekrar gösterir
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // simdilik veritabanına kayıt yapmıyoruz
+        // formun doğrulandıgını kullaniciya bildirecegiz
+        TempData["Message"] = "Form doğrulandı. Veritabanına kayıt henüz eklenmedi.";
+
+        // H04: PRG yontemi ile listeye yonlendirir
+        return RedirectToAction(nameof(Index));
+    }
+
 }
