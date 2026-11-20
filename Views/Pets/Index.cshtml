@@ -1,0 +1,37 @@
+
+@* controllerdan gelen pet listesini karşılıyoruz *@
+@model List<PatiTakip.Models.Pet>
+
+@{
+    //sayfanın baslıgını belirliyoruz
+    ViewData["Title"] = "Evcil Hayvanlar";
+}
+
+<h2>Evcil Hayvanlar</h2>
+
+@* bootstrap ile tablo oluşturuyoruz *@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Adı</th>
+            <th>Türü</th>
+            <th>Irkı</th>
+            <th>Doğum Tarihi</th>
+            <th>Kilo</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @* listedeki her hayvan icin bir satır olusturuyoruz *@
+        @foreach (var pet in Model)
+        {
+            <tr>
+                <td>@pet.Name</td>
+                <td>@pet.Species</td>
+                <td>@pet.Breed</td>
+                <td>@pet.BirthDate?.ToString("dd.MM.yyyy")</td>
+                <td>@pet.Weight kg</td>
+            </tr>
+        }
+    </tbody>
+</table>

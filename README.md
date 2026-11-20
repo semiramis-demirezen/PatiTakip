@@ -31,3 +31,31 @@ Sistemde üç kullanıcı rolü bulunacaktır:
 ## Proje Durumu
 
 Projenin temel ASP.NET Core MVC yapısı oluşturuldu.
+
+
+## Geliştirme Notları
+
+### MVC Altyapısı
+- ASP.NET Core MVC ile proje oluşturuldu.
+- Controller, Model ve View yapısı kullanıldı.
+
+### Veritabanı Hazırlığı
+- SQLite veritabanı seçildi.
+- Entity Framework Core paketleri eklendi.
+- Pet modeli ve AppDbContext oluşturuldu.
+- İlk Migration hazırlandı.
+
+### Evcil Hayvan Listeleme
+- PetsController oluşturuldu.
+- Index action metodu yazıldı.
+- Test amacıyla geçici Pet listesi kullanıldı.
+- Razor ve Bootstrap ile listeleme sayfası hazırlandı.
+
+### Kullanılan Ders Konuları
+- H02: MVC, Controller, Action
+- H03: Razor, Model, ViewData, foreach
+
+### Sonraki Aşama
+- Evcil hayvan ekleme formu
+- GET ve POST işlemleri
+- Model Binding ve Validation
