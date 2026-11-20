@@ -33,7 +33,16 @@ public class PetsController : Controller
             BirthDate = new DateTime(2022, 3, 15),
             Weight = 25.5
         });
+
+        
         // listeyi Index.cshtml sayfasina gonderiyoruz
         return View(pets);
+    }
+
+    // GET isteği ile evcil hayvan ekleme formunu açiyor
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
     }
 }
