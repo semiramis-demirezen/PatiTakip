@@ -10,6 +10,14 @@
 <h2>Evcil Hayvanlar</h2>
 
 
+@* H05: Yeni evcil hayvan ekleme formuna geçiş. *@
+<a asp-controller="Pets"
+   asp-action="Create"
+   class="btn btn-primary mb-3">
+    Yeni Evcil Hayvan Ekle
+</a>
+
+
 @* H04: POST işleminden sonra gelen mesajı gösteriyoruz. *@
 @if (TempData["Message"] != null)
 {
@@ -27,7 +35,7 @@
             <th>Türü</th>
             <th>Irkı</th>
             <th>Doğum Tarihi</th>
-            <th>Kilo</th>
+            <th>Kilo (kg)</th>
         </tr>
     </thead>
 

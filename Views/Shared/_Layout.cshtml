@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,14 +19,30 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    
                     <ul class="navbar-nav flex-grow-1">
+                        @* H03-H05: Ana sayfaya yönlendiren bağlantı. *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark"
+                            asp-controller="Home"
+                            asp-action="Index">Ana Sayfa</a>
                         </li>
+
+                        @* H05: Evcil hayvan listeleme sayfasına yönlendirir. *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark"
+                            asp-controller="Pets"
+                            asp-action="Index">Evcil Hayvanlar</a>
+                        </li>
+
+                        @* H05: Gizlilik sayfasına yönlendirir. *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark"
+                            asp-controller="Home"
+                            asp-action="Privacy">Gizlilik</a>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </nav>
