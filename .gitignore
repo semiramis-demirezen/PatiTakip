@@ -1,0 +1,19 @@
+
+# Derleme dosyalari
+**/bin/
+**/obj/
+
+# Editor dosyalari
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Yerel ayarlar
+appsettings.Development.json
+appsettings.Local.json
+
+# Yerel veritabani dosyalari
+*.db
+*.db-shm
+*.db-wal
