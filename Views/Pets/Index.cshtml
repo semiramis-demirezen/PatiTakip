@@ -36,6 +36,7 @@
             <th>Irkı</th>
             <th>Doğum Tarihi</th>
             <th>Kilo (kg)</th>
+            <th>İşlemler</th>
         </tr>
     </thead>
 
@@ -49,6 +50,7 @@
                 <td>@pet.Breed</td>
                 <td>@pet.BirthDate?.ToString("dd.MM.yyyy")</td>
                 <td>@pet.Weight kg</td>
+                <td><a asp-controller="Pets" asp-action="Details" asp-route-id="@pet.Id" class="btn btn-info btn-sm">Detaylari Goruntule</a></td>
             </tr>
         }
     </tbody>

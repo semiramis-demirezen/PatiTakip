@@ -1,0 +1,24 @@
+@* controller dan gelen hayvanin bilgilerini aliyoruz *@
+@model PatiTakip.Models.Pet
+
+@{
+    //sayfanin basligi
+    ViewData["Title"]="Evcil Hayvan Detayi";
+}
+
+<h2>Evcil Hayvan Detayi</h2>
+
+@*bootstrap ile hayvan bilgilerini kart icinde gosterme*@
+<div class="card">
+    <div class="card-body">
+        <h4>@Model.Name</h4>
+        <p><strong>Tur:</strong> @Model.Species</p>
+        <p><strong>Irk:</strong> @Model.Breed</p>
+        <p><strong>Dogum Tarihi:</strong> @Model.BirthDate?ToString("dd.mm.yy")</p>
+        <p><strong>Kilo:</strong> @Model.Weight kg</p>
+
+    </div>
+</div>
+
+@*evcil hayvan listesine geri donme*@
+<a asp-controller="Pets" asp-action="Index" class="btn btn-secondary mt-3">Geri Don</a>
