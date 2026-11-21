@@ -50,6 +50,13 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Hatalı girişler için Türkçe uyarılar eklendi.
 - Sayfalar arası bağlantılar ve menü düzenlendi.
 
+- Ana sayfa PatiTakip'e uygun şekilde düzenlendi.
+- Evcil hayvan detay sayfası oluşturuldu.
+- Hayvanların ID bilgisine göre detayları gösterildi.
+- Geçersiz ID girildiğinde 404 hatası döndürüldü.
+- Doğum tarihleri Gün.Ay.Yıl biçiminde düzenlendi.
+
+
 ## Kullanılan Ders Konuları
 
 - **H02:** MVC, Controller, Action
