@@ -12,10 +12,10 @@
 <div class="card">
     <div class="card-body">
         <h4>@Model.Name</h4>
-        <p><strong>Tur:</strong> @Model.Species</p>
-        <p><strong>Irk:</strong> @Model.Breed</p>
-        <p><strong>Dogum Tarihi:</strong> @Model.BirthDate?.ToString("dd.MM.yy")</p>
-        <p><strong>Kilo:</strong> @Model.Weight kg</p>
+        <p><strong>Tur:</strong> @(Model.Species)</p>
+        <p><strong>Irk:</strong> @(Model.Breed)</p>
+        <p><strong>Dogum Tarihi:</strong> @(Model.BirthDate?.ToString("dd.MM.yyyy"))</p>
+        <p><strong>Kilo:</strong> @(Model.Weight)</p>
 
     </div>
 </div>

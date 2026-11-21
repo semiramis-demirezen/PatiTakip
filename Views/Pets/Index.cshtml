@@ -48,7 +48,7 @@
                 <td>@pet.Name</td>
                 <td>@pet.Species</td>
                 <td>@pet.Breed</td>
-                <td>@pet.BirthDate?.ToString("dd.MM.yyyy")</td>
+                <td>@(pet.BirthDate?.ToString("dd.MM.yyyy"))</td>
                 <td>@pet.Weight kg</td>
                 <td><a asp-controller="Pets" asp-action="Details" asp-route-id="@pet.Id" class="btn btn-info btn-sm">Detaylari Goruntule</a></td>
             </tr>
