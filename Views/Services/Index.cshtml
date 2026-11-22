@@ -1,0 +1,35 @@
+
+@* controller'dan gelen hizmet listesini aliyor *@
+@model List<PatiTakip.Models.Service>
+
+@{
+    // sayfanin basligini belirliyor
+    ViewData["Title"] = "Hizmetler";
+}
+
+<h2>Klinik Hizmetleri</h2>
+
+<p>Kliniğimizde sunulan hizmetler:</p>
+
+@* Bootstrap ile hizmetleri tablo halinde gösteriyoruz *@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Hizmet Adı</th>
+            <th>Süre (Dakika)</th>
+            <th>Ücret (TL)</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @* listedeki her hizmet için bir satır olusturuyor *@
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.Name</td>
+                <td>@service.DurationMinutes</td>
+                <td>@service.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
