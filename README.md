@@ -56,6 +56,13 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Geçersiz ID girildiğinde 404 hatası döndürüldü.
 - Doğum tarihleri Gün.Ay.Yıl biçiminde düzenlendi.
 
+### Klinik Hizmetleri
+- Service modeli oluşturuldu.
+- ServicesController hazırlandı.
+- Örnek hizmetlerle listeleme sayfası yapıldı.
+- Hizmetlerin süre ve ücret bilgileri tabloda gösterildi.
+- Üst menüye Hizmetler bağlantısı eklendi.
+
 
 ## Kullanılan Ders Konuları
 
