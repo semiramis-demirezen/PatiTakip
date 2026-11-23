@@ -1,0 +1,32 @@
+
+@* controllerdan gelen veteriner listesini aliyoruz *@
+@model List<PatiTakip.Models.Veterinarian>
+
+@{
+    ViewData["Title"] = "Veteriner Hekimler";
+}
+
+<h2>Veteriner Hekimler</h2>
+
+<p>Klinigimizde gorev yapan veteriner hekimler:</p>
+
+@* veterinerleri tablo halinde gosteriyoruz *@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ad Soyad</th>
+            <th>Uzmanlık Alanı</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @* listedeki her veteriner icin bir satir olusturuyoruz *@
+        @foreach (var veterinarian in Model)
+        {
+            <tr>
+                <td>@veterinarian.FullName</td>
+                <td>@veterinarian.Specialty</td>
+            </tr>
+        }
+    </tbody>
+</table>
