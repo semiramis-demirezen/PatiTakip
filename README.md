@@ -64,6 +64,14 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Üst menüye Hizmetler bağlantısı eklendi.
 
 
+### Hizmet Ekleme
+- Hizmet ekleme formu oluşturuldu.
+- GET ve POST işlemleri eklendi.
+- Hizmet adı, süre ve ücret için doğrulama kuralları yazıldı.
+- Hatalı girişlerde uyarı mesajları gösterildi.
+- Form gönderme ve yönlendirme işlemleri test edildi.
+
+
 ## Kullanılan Ders Konuları
 
 - **H02:** MVC, Controller, Action
