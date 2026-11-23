@@ -1,0 +1,49 @@
+
+@* formda kullanacagimiz bilgileri aliyoruz *@
+@model PatiTakip.ViewModels.ServiceCreateViewModel
+
+@{
+    ViewData["Title"] = "Yeni Hizmet Ekle";
+}
+
+<h2>Yeni Hizmet Ekle</h2>
+
+@* kullanicinin girdigi bilgileri controller a gonderiyoruz *@
+<form asp-controller="Services" asp-action="Create" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @* hizmet adini aliyoruz *@
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    @* hizmet suresini aliyoruz *@
+    <div class="mb-3">
+        <label asp-for="DurationMinutes" class="form-label"></label>
+        <input asp-for="DurationMinutes" class="form-control" />
+        <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+    </div>
+
+    @* hizmet ucretini aliyoruz *@
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+
+    <a asp-controller="Services"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Geri Dön
+    </a>
+</form>
+
+@* form hatalarini sayfada gostermek icin gerekli dosyayi ekliyoruz *@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

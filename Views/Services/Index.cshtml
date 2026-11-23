@@ -9,6 +9,24 @@
 
 <h2>Klinik Hizmetleri</h2>
 
+
+@* hizmet ekleme sayfasina gidiyoruz *@
+<a asp-controller="Services"
+   asp-action="Create"
+   class="btn btn-primary mb-3">
+    Yeni Hizmet Ekle
+</a>
+
+
+@* form gonderildikten sonra gelen mesaji gosteriyoruz *@
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
+
+
 <p>Kliniğimizde sunulan hizmetler:</p>
 
 @* Bootstrap ile hizmetleri tablo halinde gösteriyoruz *@

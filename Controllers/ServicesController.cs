@@ -1,4 +1,4 @@
-
+using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
 
@@ -39,4 +39,34 @@ public class ServicesController : Controller
         // Hizmet listesini View sayfasına gönderiyoruz.
         return View(services);
     }
+
+
+    // hizmet ekleme sayfasini aciyoruz
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+
+
+    // formdan gonderilen hizmet bilgilerini aliyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(ServiceCreateViewModel model)
+    {
+        // girilen bilgilerin kurallara uygun olup olmadigini kontrol ediyoruz
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // veritabani kaydini daha sonra ekleyecegiz
+        TempData["Message"] = "Form doğrulandı ancak hizmet henüz kaydedilmedi";
+
+        // islemden sonra hizmetler sayfasina donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
+
 }
