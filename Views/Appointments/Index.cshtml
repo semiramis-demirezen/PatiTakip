@@ -1,0 +1,38 @@
+
+@* controllerdan gelen randevu listesini aliyoruz *@
+@model List<PatiTakip.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Randevular";
+}
+
+<h2>Randevular</h2>
+
+<p>Kliniğimizde oluşturulan randevular</p>
+
+@* randevulari tablo halinde gosteriyoruz *@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Hayvan Numarası</th>
+            <th>Veteriner Numarası</th>
+            <th>Hizmet Numarası</th>
+            <th>Randevu Tarihi</th>
+            <th>Durum</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @* listedeki her randevu icin bir satir olusturuyoruz *@
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.PetId</td>
+                <td>@appointment.VeterinarianId</td>
+                <td>@appointment.ServiceId</td>
+                <td>@(appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm"))</td>
+                <td>@appointment.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
