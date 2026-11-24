@@ -1,4 +1,4 @@
-
+using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
 
@@ -31,4 +31,33 @@ public class VeterinariansController : Controller
         // veteriner listesini view sayfasina gonderiyoruz
         return View(veterinarians);
     }
+
+
+    // veteriner ekleme formunu aciyoruz
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+
+    // formdan gonderilen veteriner bilgilerini aliyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(VeterinarianCreateViewModel model)
+    {
+        // girilen bilgileri kontrol ediyoruz
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // veritabani kaydini daha sonra ekleyecegiz
+        TempData["Message"] = "Form doğrulandı ancak veteriner henüz kaydedilmedi";
+
+        // veteriner listesine geri donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
+
 }

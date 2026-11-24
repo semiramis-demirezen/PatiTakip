@@ -8,6 +8,23 @@
 
 <h2>Veteriner Hekimler</h2>
 
+@* veteriner ekleme sayfasina yonlendiriyoruz *@
+<a asp-controller="Veterinarians"
+   asp-action="Create"
+   class="btn btn-primary mb-3">
+    Yeni Veteriner Ekle
+</a>
+
+
+@* form gonderildikten sonra gelen mesaji gosteriyoruz *@
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
+
+
 <p>Klinigimizde gorev yapan veteriner hekimler:</p>
 
 @* veterinerleri tablo halinde gosteriyoruz *@

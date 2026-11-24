@@ -1,0 +1,42 @@
+
+@* formdan gelen veteriner bilgilerini tutuyoruz *@
+@model PatiTakip.ViewModels.VeterinarianCreateViewModel
+
+@{
+    ViewData["Title"] = "Veteriner Ekle";
+}
+
+<h2>Yeni Veteriner Ekle</h2>
+
+@* veteriner bilgilerini controller a gonderiyoruz *@
+<form asp-controller="Veterinarians" asp-action="Create" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @* veterinerin adini ve soyadini aliyoruz *@
+    <div class="mb-3">
+        <label asp-for="FullName" class="form-label"></label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    @* veterinerin uzmanlik alanini aliyoruz *@
+    <div class="mb-3">
+        <label asp-for="Specialty" class="form-label"></label>
+        <input asp-for="Specialty" class="form-control" />
+        <span asp-validation-for="Specialty" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+
+    <a asp-controller="Veterinarians"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Geri Dön
+    </a>
+</form>
+
+@* form hatalarini gostermek icin gerekli dosyayi ekliyoruz *@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
