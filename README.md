@@ -72,6 +72,16 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Form gönderme ve yönlendirme işlemleri test edildi.
 
 
+
+### Veteriner Hekimler
+- Veteriner modeli ve listeleme sayfası oluşturuldu.
+- Örnek veteriner bilgileri tabloda gösterildi.
+- Veteriner ekleme formu hazırlandı.
+- GET ve POST işlemleri eklendi.
+- Ad soyad ve uzmanlık alanı için doğrulama yapıldı.
+- Form işlemleri test edildi.
+
+
 ## Kullanılan Ders Konuları
 
 - **H02:** MVC, Controller, Action
