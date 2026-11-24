@@ -1,0 +1,36 @@
+
+@* controllerdan gelen asi kayitlarini aliyoruz *@
+@model List<PatiTakip.Models.Vaccination>
+
+@{
+    ViewData["Title"] = "Aşı Kayıtları";
+}
+
+<h2>Aşı Kayıtları</h2>
+
+<p>Evcil hayvanların aşı geçmişi ve sonraki aşı tarihleri</p>
+
+@* asi kayitlarini tablo halinde gosteriyoruz *@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Hayvan Numarası</th>
+            <th>Aşı Adı</th>
+            <th>Yapıldığı Tarih</th>
+            <th>Sonraki Doz Tarihi</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @* listedeki her asi kaydi icin bir satir olusturuyoruz *@
+        @foreach (var vaccination in Model)
+        {
+            <tr>
+                <td>@vaccination.PetId</td>
+                <td>@vaccination.VaccineName</td>
+                <td>@(vaccination.DateAdministered.ToString("dd.MM.yyyy"))</td>
+                <td>@(vaccination.NextDoseDate.ToString("dd.MM.yyyy"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
