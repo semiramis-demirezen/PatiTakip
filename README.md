@@ -82,19 +82,14 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Form işlemleri test edildi.
 
 
-## Kullanılan Ders Konuları
+### Aşı Kayıtları
+- Vaccination modeli oluşturuldu.
+- Örnek aşı kayıtlarıyla listeleme sayfası hazırlandı.
+- Aşı kaydı ekleme formu oluşturuldu.
+- GET ve POST işlemleri eklendi.
+- Form alanları için doğrulama kuralları yazıldı.
+- Boş ve hatalı girişler test edildi.
+- Geçerli form gönderiminde yönlendirme kontrol edildi.
 
-- **H02:** MVC, Controller, Action
-- **H03:** Razor, Model, ViewData, foreach, Layout
-- **H04:** GET, POST, Model Binding, ViewModel
-- **H05:** Tag Helper, AntiForgeryToken
-- **H06:** DataAnnotations, ModelState ve Validation
 
-## Sonraki Aşama
-
-- Evcil hayvan bilgilerini veritabanına kaydetmek
-- Güncelleme ve silme işlemlerini yapmak
-- Kullanıcı girişini ve rollerini oluşturmak
-- Veteriner ve randevu işlemlerini geliştirmek
-- REST API ve MCP özelliklerini eklemek
 
