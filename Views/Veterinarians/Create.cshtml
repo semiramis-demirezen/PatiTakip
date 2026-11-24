@@ -16,14 +16,14 @@
     @* veterinerin adini ve soyadini aliyoruz *@
     <div class="mb-3">
         <label asp-for="FullName" class="form-label"></label>
-        <input asp-for="FullName" class="form-control" />
+        <input asp-for="FullName" class="form-control" maxlength="200" />
         <span asp-validation-for="FullName" class="text-danger"></span>
     </div>
 
     @* veterinerin uzmanlik alanini aliyoruz *@
     <div class="mb-3">
         <label asp-for="Specialty" class="form-label"></label>
-        <input asp-for="Specialty" class="form-control" />
+        <input asp-for="Specialty" class="form-control" maxlength="200" />
         <span asp-validation-for="Specialty" class="text-danger"></span>
     </div>
 
