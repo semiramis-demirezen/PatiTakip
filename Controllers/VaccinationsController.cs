@@ -1,4 +1,4 @@
-
+using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
 
@@ -35,4 +35,34 @@ public class VaccinationsController : Controller
         // asi kayitlarini sayfaya gonderiyoruz
         return View(vaccinations);
     }
+
+
+    // asi kaydi ekleme formunu aciyoruz
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+
+
+
+    // formdan gonderilen asi bilgilerini aliyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(VaccinationCreateViewModel model)
+    {
+        // girilen bilgilerin dogru olup olmadigini kontrol ediyoruz
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // veritabani kaydini daha sonra ekleyecegiz
+        TempData["Message"] = "Form doğrulandı ancak aşı kaydı henüz kaydedilmedi.";
+
+        // asi kayitlari listesine geri donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
 }
