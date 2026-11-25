@@ -101,6 +101,6 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Hayvan, veteriner ve hizmet numaraları için doğrulama yapıldı.
 - Hata mesajları Türkçeleştirildi.
 - Form gönderme işlemleri test edildi.
-
+- Tekrar eden örnek hayvan bilgileri ortak bir metotta toplandı.
 Randevular henüz veritabanına kaydedilmiyor.
 
