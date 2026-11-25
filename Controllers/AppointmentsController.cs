@@ -1,4 +1,4 @@
-
+using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
 
@@ -37,4 +37,31 @@ public class AppointmentsController : Controller
         // randevu listesini sayfaya gonderiyoruz
         return View(appointments);
     }
+
+
+    // randevu olusturma formunu aciyoruz
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    // formdan gonderilen randevu bilgilerini aliyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(AppointmentCreateViewModel model)
+    {
+        // girilen bilgilerin dogru olup olmadigini kontrol ediyoruz
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // veritabani kaydini daha sonra ekleyecegiz
+        TempData["Message"] = "Form doğrulandı ancak randevu henüz kaydedilmedi.";
+
+        // randevu listesine geri donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
 }

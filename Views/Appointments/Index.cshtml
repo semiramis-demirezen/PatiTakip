@@ -8,6 +8,23 @@
 
 <h2>Randevular</h2>
 
+@* randevu olusturma sayfasina gidiyoruz *@
+<a asp-controller="Appointments"
+   asp-action="Create"
+   class="btn btn-primary mb-3">
+    Yeni Randevu Oluştur
+</a>
+
+
+@* formdan gelen bilgilendirme mesajini gosteriyoruz *@
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
+
+
 <p>Kliniğimizde oluşturulan randevular</p>
 
 @* randevulari tablo halinde gosteriyoruz *@
