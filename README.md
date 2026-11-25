@@ -93,3 +93,14 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 
 
 
+### Randevu İşlemleri
+- Appointment modeli oluşturuldu.
+- Örnek randevularla listeleme sayfası hazırlandı.
+- Randevu oluşturma formu yapıldı.
+- GET ve POST işlemleri eklendi.
+- Hayvan, veteriner ve hizmet numaraları için doğrulama yapıldı.
+- Hata mesajları Türkçeleştirildi.
+- Form gönderme işlemleri test edildi.
+
+Randevular henüz veritabanına kaydedilmiyor.
+
