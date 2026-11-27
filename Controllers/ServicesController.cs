@@ -70,6 +70,68 @@ public class ServicesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+
+
+    // duzenlenecek hizmetin bilgilerini getiriyoruz
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        // hizmeti veritabaninda ariyoruz
+        Service? service = _context.Services.Find(id);
+
+        // hizmet bulunamazsa hata donduruyoruz
+        if (service == null)
+        {
+            return NotFound();
+        }
+
+        // mevcut hizmet bilgilerini forma aktariyoruz
+        ServiceCreateViewModel model = new ServiceCreateViewModel
+        {
+            Name = service.Name,
+            DurationMinutes = service.DurationMinutes,
+            Price = service.Price
+        };
+
+        return View(model);
+    }
+
+    // formdan gelen yeni hizmet bilgilerini kaydediyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, ServiceCreateViewModel model)
+    {
+        // duzenlenecek hizmeti veritabaninda buluyoruz
+        Service? service = _context.Services.Find(id);
+
+        // hizmet bulunamazsa hata donduruyoruz
+        if (service == null)
+        {
+            return NotFound();
+        }
+
+        // girilen bilgilerin dogrulugunu kontrol ediyoruz
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // mevcut hizmetin bilgilerini guncelliyoruz
+        service.Name = model.Name;
+        service.DurationMinutes = model.DurationMinutes.Value;
+        service.Price = model.Price.Value;
+
+        // degisiklikleri veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // kullaniciya basari mesajini gosteriyoruz
+        TempData["Message"] = "Hizmet bilgileri başarıyla güncellendi.";
+
+        // hizmetler listesine donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
+
    
 
 

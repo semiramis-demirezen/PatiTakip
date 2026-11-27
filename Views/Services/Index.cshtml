@@ -36,6 +36,7 @@
             <th>Hizmet Adı</th>
             <th>Süre (Dakika)</th>
             <th>Ücret (TL)</th>
+            <th>İşlemler</th>
         </tr>
     </thead>
 
@@ -47,6 +48,9 @@
                 <td>@service.Name</td>
                 <td>@service.DurationMinutes</td>
                 <td>@service.Price</td>
+                @* hizmeti duzenleme sayfasina yonlendiriyoruz *@
+                <td><a asp-controller="Services" asp-action="Edit" asp-route-id="@service.Id" class="btn btn-warning btn-sm"> Düzenle </a></td>
+
             </tr>
         }
     </tbody>

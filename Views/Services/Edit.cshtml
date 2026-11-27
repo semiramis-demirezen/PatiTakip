@@ -1,0 +1,58 @@
+
+@model PatiTakip.ViewModels.ServiceCreateViewModel
+
+@{
+    ViewData["Title"] = "Hizmet Düzenle";
+    var serviceId = ViewContext.RouteData.Values["id"];
+}
+
+<h2>Hizmet Düzenle</h2>
+
+<p>Hizmet bilgilerini aşağıdaki formdan güncelleyebilirsiniz.</p>
+
+<form asp-controller="Services"
+      asp-action="Edit"
+      asp-route-id="@serviceId"
+      method="post">
+
+    @* formdaki dogrulama hatalarini gosteriyoruz *@
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Hizmet Adı</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DurationMinutes" class="form-label">
+            Hizmet Süresi (Dakika)
+        </label>
+        <input asp-for="DurationMinutes"
+               type="number"
+               class="form-control" />
+        <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Hizmet Ücreti (TL)</label>
+        <input asp-for="Price"
+               type="number"
+               step="0.01"
+               class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    @* guncellenen bilgileri controller a gonderiyoruz *@
+    <button type="submit" class="btn btn-primary">
+        Değişiklikleri Kaydet
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        İptal
+    </a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
