@@ -1,6 +1,7 @@
 using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
+using PatiTakip.Data;
 
 namespace PatiTakip.Controllers;
 
@@ -8,13 +9,26 @@ namespace PatiTakip.Controllers;
 // kullanılan konular: MVC, Controller, Action, Model
 public class PetsController : Controller
 {    
-    // hayvan listesini sayfaya gonderiyoruz
+
+    // veritabanina erismek icin context kullaniyoruz
+    private readonly AppDbContext _context;
+
+    // context bilgisini constructor ile aliyoruz
+    public PetsController(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    // hayvan bilgilerini veritabanindan aliyoruz
     public IActionResult Index()
     {
-        List<Pet> pets = GetSamplePets();
+        // veritabanindaki hayvanlari listeye aktariyoruz
+        List<Pet> pets = _context.Pets.ToList();
 
+        // hayvan listesini sayfaya gonderiyoruz
         return View(pets);
     }
+
 
 
     // GET isteği ile evcil hayvan ekleme formunu açiyor
@@ -28,71 +42,90 @@ public class PetsController : Controller
     // formdan gönderilen bilgileri karşılar
     // anti-forgery token ile isteği doğrular
     // modelState ile form verilerini kontrol eder
+
+    // formdan gelen hayvan bilgilerini aliyoruz
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(PetCreateViewModel model)
     {
-        // formda hata varsa aynı sayfayı tekrar gösterir
+        // girilen bilgilerin dogrulugunu kontrol ediyoruz
         if (!ModelState.IsValid)
         {
             return View(model);
         }
 
-        // simdilik veritabanına kayıt yapmıyoruz
-        // formun doğrulandıgını kullaniciya bildirecegiz
-        TempData["Message"] = "Form doğrulandı. Veritabanına kayıt henüz eklenmedi.";
+        // formdan gelen bilgilerle yeni hayvan olusturuyoruz
+        Pet pet = new Pet
+        {
+            Name = model.Name,
+            Species = model.Species,
+            Breed = model.Breed,
+            BirthDate = model.BirthDate,
+            Weight = model.Weight
+        };
 
-        // H04: PRG yontemi ile listeye yonlendirir
+        // yeni hayvani veritabanina ekliyoruz
+        _context.Pets.Add(pet);
+
+        // yapilan degisiklikleri veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // kayit tamamlandiginda mesaj gosteriyoruz
+        TempData["Message"] = "Evcil hayvan başarıyla kaydedildi.";
+
+        // hayvan listesine geri donuyoruz
         return RedirectToAction(nameof(Index));
     }
 
+
+
     //URLden gelen hayvanlarin ID sine gore detay sayfasini aciyoruz
     
-    // secilen hayvanin bilgilerini gosteriyoruz
+
+    // secilen hayvanin bilgilerini veritabanindan aliyoruz
     public IActionResult Details(int id)
     {
-        // hayvan listesini aliyoruz
-        List<Pet> pets = GetSamplePets();
+        // numarasina gore hayvani buluyoruz
+        Pet? pet = _context.Pets.Find(id);
 
-        // verilen numaraya ait hayvani buluyoruz
-        Pet? pet = pets.Find(p => p.Id == id);
-
-        // hayvan bulunamazsa hata donduruyoruz
+        // hayvan bulunamazsa 404 hatasi donduruyoruz
         if (pet == null)
         {
             return NotFound();
         }
 
+        // bulunan hayvani detay sayfasina gonderiyoruz
         return View(pet);
     }
 
-    // ornek hayvan bilgilerini tek yerde tutuyoruz
-    private List<Pet> GetSamplePets()
-    {
-        List<Pet> pets = new List<Pet>();
 
-        pets.Add(new Pet
-        {
-            Id = 1,
-            Name = "Pamuk",
-            Species = "Kedi",
-            Breed = "Tekir",
-            BirthDate = new DateTime(2023, 5, 10),
-            Weight = 4.2
-        });
+    // // ornek hayvan bilgilerini tek yerde tutuyoruz
+    // private List<Pet> GetSamplePets()
+    // {
+    //     List<Pet> pets = new List<Pet>();
 
-        pets.Add(new Pet
-        {
-            Id = 2,
-            Name = "Karabaş",
-            Species = "Köpek",
-            Breed = "Golden Retriever",
-            BirthDate = new DateTime(2022, 3, 15),
-            Weight = 25.5
-        });
+    //     pets.Add(new Pet
+    //     {
+    //         Id = 1,
+    //         Name = "Pamuk",
+    //         Species = "Kedi",
+    //         Breed = "Tekir",
+    //         BirthDate = new DateTime(2023, 5, 10),
+    //         Weight = 4.2
+    //     });
 
-        return pets;
-    }
+    //     pets.Add(new Pet
+    //     {
+    //         Id = 2,
+    //         Name = "Karabaş",
+    //         Species = "Köpek",
+    //         Breed = "Golden Retriever",
+    //         BirthDate = new DateTime(2022, 3, 15),
+    //         Weight = 25.5
+    //     });
+
+    //     return pets;
+    // }
 
 
 }
