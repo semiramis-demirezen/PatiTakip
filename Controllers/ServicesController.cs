@@ -1,42 +1,30 @@
 using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
+using PatiTakip.Data;
 
 namespace PatiTakip.Controllers;
 
 public class ServicesController : Controller
 {
-    // H02: Hizmetleri listeleme sayfasını açıyoruz.
+
+    // veritabani islemleri icin context kullaniyoruz
+    private readonly AppDbContext _context;
+
+    // veritabani baglantisini controller a aliyoruz
+    public ServicesController(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    
+    // hizmetleri veritabanindan listeliyoruz
     public IActionResult Index()
     {
-        // Şimdilik veritabanı yerine örnek hizmetler kullanıyoruz.
-        List<Service> services = new List<Service>();
+        // kayitli hizmetleri listeye aliyoruz
+        List<Service> services = _context.Services.ToList();
 
-        services.Add(new Service
-        {
-            Id = 1,
-            Name = "Genel Muayene",
-            DurationMinutes = 30,
-            Price = 500
-        });
-
-        services.Add(new Service
-        {
-            Id = 2,
-            Name = "Aşı",
-            DurationMinutes = 15,
-            Price = 350
-        });
-
-        services.Add(new Service
-        {
-            Id = 3,
-            Name = "Diş Temizliği",
-            DurationMinutes = 60,
-            Price = 900
-        });
-
-        // Hizmet listesini View sayfasına gönderiyoruz.
+        // listeyi sayfaya gonderiyoruz
         return View(services);
     }
 
@@ -50,23 +38,39 @@ public class ServicesController : Controller
 
 
 
-    // formdan gonderilen hizmet bilgilerini aliyoruz
+    // formdan gelen hizmet bilgilerini aliyoruz
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(ServiceCreateViewModel model)
     {
-        // girilen bilgilerin kurallara uygun olup olmadigini kontrol ediyoruz
+        // girilen bilgileri kontrol ediyoruz
         if (!ModelState.IsValid)
         {
             return View(model);
         }
 
-        // veritabani kaydini daha sonra ekleyecegiz
-        TempData["Message"] = "Form doğrulandı ancak hizmet henüz kaydedilmedi";
+        // form bilgileriyle yeni hizmet olusturuyoruz
+        Service service = new Service
+        {
+            Name = model.Name,
+            DurationMinutes = model.DurationMinutes.Value,
+            Price = model.Price.Value
+        };
 
-        // islemden sonra hizmetler sayfasina donuyoruz
+        // hizmeti veritabanina ekliyoruz
+        _context.Services.Add(service);
+
+        // degisiklikleri veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // basarili kayit mesajini hazirliyoruz
+        TempData["Message"] = "Hizmet başarıyla kaydedildi.";
+
+        // hizmetler listesine donuyoruz
         return RedirectToAction(nameof(Index));
     }
+
+   
 
 
 }
