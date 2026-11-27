@@ -190,4 +190,50 @@ public class PetsController : Controller
     }
 
 
+    // silinecek hayvanin bilgilerini getiriyoruz
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        // hayvani veritabaninda ariyoruz
+        Pet? pet = _context.Pets.Find(id);
+
+        // hayvan bulunamazsa hata donduruyoruz
+        if (pet == null)
+        {
+            return NotFound();
+        }
+
+        // hayvani silme onay sayfasina gonderiyoruz
+        return View(pet);
+    }
+
+    // onaylanan hayvani veritabanindan siliyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        // silinecek hayvani buluyoruz
+        Pet? pet = _context.Pets.Find(id);
+
+        // hayvan bulunamazsa hata donduruyoruz
+        if (pet == null)
+        {
+            return NotFound();
+        }
+
+        // hayvani silinecek kayitlar arasina ekliyoruz
+        _context.Pets.Remove(pet);
+
+        // silme islemini veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // kullaniciya bilgi veriyoruz
+        TempData["Message"] = "Evcil hayvan başarıyla silindi.";
+
+        // hayvan listesine geri donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
+
+
 }
