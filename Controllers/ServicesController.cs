@@ -132,6 +132,50 @@ public class ServicesController : Controller
     }
 
 
+    // silinecek hizmetin bilgilerini getiriyoruz
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        // hizmeti veritabaninda ariyoruz
+        Service? service = _context.Services.Find(id);
+
+        // hizmet bulunamazsa hata donduruyoruz
+        if (service == null)
+        {
+            return NotFound();
+        }
+
+        // hizmeti silme onay sayfasina gonderiyoruz
+        return View(service);
+    }
+
+    // onaylanan hizmeti veritabanindan siliyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        // silinecek hizmeti veritabaninda buluyoruz
+        Service? service = _context.Services.Find(id);
+
+        // hizmet bulunamazsa hata donduruyoruz
+        if (service == null)
+        {
+            return NotFound();
+        }
+
+        // hizmeti silinmek uzere isaretliyoruz
+        _context.Services.Remove(service);
+
+        // silme islemini veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // kullaniciya basari mesaji gosteriyoruz
+        TempData["Message"] = "Hizmet başarıyla silindi.";
+
+        // hizmetler listesine geri donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
    
 
 

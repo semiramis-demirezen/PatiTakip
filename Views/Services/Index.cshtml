@@ -48,8 +48,12 @@
                 <td>@service.Name</td>
                 <td>@service.DurationMinutes</td>
                 <td>@service.Price</td>
-                @* hizmeti duzenleme sayfasina yonlendiriyoruz *@
-                <td><a asp-controller="Services" asp-action="Edit" asp-route-id="@service.Id" class="btn btn-warning btn-sm"> Düzenle </a></td>
+                <td>
+                    @* hizmeti duzenleme sayfasina yonlendiriyoruz *@
+                    <a asp-controller="Services" asp-action="Edit" asp-route-id="@service.Id" class="btn btn-warning btn-sm"> Düzenle </a>
+                    @* hizmeti silme onay sayfasina yonlendiriyoruz *@
+                    <a asp-controller="Services" asp-action="Delete" asp-route-id="@service.Id" class="btn btn-danger btn-sm"> Sil </a>
+                </td>
 
             </tr>
         }
