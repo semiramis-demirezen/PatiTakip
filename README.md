@@ -55,6 +55,10 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Hayvanların ID bilgisine göre detayları gösterildi.
 - Geçersiz ID girildiğinde 404 hatası döndürüldü.
 - Doğum tarihleri Gün.Ay.Yıl biçiminde düzenlendi.
+- Evcil hayvanlar SQLite veritabanına kaydediliyor.
+- Kayıtlı hayvanlar listelenebiliyor ve detayları görüntülenebiliyor.
+- Hayvan bilgileri güncellenebiliyor.
+- Silme işlemi onay sayfasından gerçekleştiriliyor.
 
 ### Klinik Hizmetleri
 - Service modeli oluşturuldu.
@@ -70,7 +74,10 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Hizmet adı, süre ve ücret için doğrulama kuralları yazıldı.
 - Hatalı girişlerde uyarı mesajları gösterildi.
 - Form gönderme ve yönlendirme işlemleri test edildi.
-
+- Hizmet kayıtları SQLite veritabanında tutuluyor.
+- Hizmet ekleme ve listeleme işlemleri tamamlandı.
+- Hizmet bilgileri güncellenebiliyor.
+- Silme işlemi için onay sayfası oluşturuldu.
 
 
 ### Veteriner Hekimler
@@ -103,4 +110,5 @@ Formda zorunlu alan kontrolleri ve hata mesajları çalışıyor. Ancak henüz v
 - Form gönderme işlemleri test edildi.
 - Tekrar eden örnek hayvan bilgileri ortak bir metotta toplandı.
 Randevular henüz veritabanına kaydedilmiyor.
+
 
