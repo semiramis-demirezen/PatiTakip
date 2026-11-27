@@ -128,4 +128,66 @@ public class PetsController : Controller
     // }
 
 
+    // duzenlenecek hayvanin bilgilerini getiriyoruz
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        // hayvani veritabaninda ariyoruz
+        Pet? pet = _context.Pets.Find(id);
+
+        // hayvan bulunamazsa hata donduruyoruz
+        if (pet == null)
+        {
+            return NotFound();
+        }
+
+        // hayvan bilgilerini forma aktariyoruz
+        PetCreateViewModel model = new PetCreateViewModel
+        {
+            Name = pet.Name,
+            Species = pet.Species,
+            Breed = pet.Breed,
+            BirthDate = pet.BirthDate,
+            Weight = pet.Weight
+        };
+
+        return View(model);
+    }
+
+    // formdan gelen yeni bilgileri kaydediyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, PetCreateViewModel model)
+    {
+        // duzenlenecek hayvani buluyoruz
+        Pet? pet = _context.Pets.Find(id);
+
+        // hayvan bulunamazsa hata donduruyoruz
+        if (pet == null)
+        {
+            return NotFound();
+        }
+
+        // form bilgilerinin dogrulugunu kontrol ediyoruz
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // hayvanin bilgilerini guncelliyoruz
+        pet.Name = model.Name;
+        pet.Species = model.Species;
+        pet.Breed = model.Breed;
+        pet.BirthDate = model.BirthDate;
+        pet.Weight = model.Weight;
+
+        // degisiklikleri veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        TempData["Message"] = "Evcil hayvan bilgileri başarıyla güncellendi.";
+
+        return RedirectToAction(nameof(Index));
+    }
+
+
 }

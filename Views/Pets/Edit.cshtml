@@ -1,0 +1,62 @@
+
+@model PatiTakip.ViewModels.PetCreateViewModel
+
+@{
+    ViewData["Title"] = "Evcil Hayvan Düzenle";
+}
+
+<h2>Evcil Hayvan Düzenle</h2>
+
+<p>Evcil hayvanın bilgilerini değiştirmek için formu düzenleyebilirsiniz.</p>
+
+<form asp-controller="Pets"
+      asp-action="Edit"
+      asp-route-id="@ViewContext.RouteData.Values["id"]"
+      method="post">
+
+    @* formdaki hatalari gosteriyoruz *@
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Hayvan Adı</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Species" class="form-label">Tür</label>
+        <input asp-for="Species" class="form-control" />
+        <span asp-validation-for="Species" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Breed" class="form-label">Irk</label>
+        <input asp-for="Breed" class="form-control" />
+        <span asp-validation-for="Breed" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BirthDate" class="form-label">Doğum Tarihi</label>
+        <input asp-for="BirthDate" type="date" class="form-control" />
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Weight" class="form-label">Kilo</label>
+        <input asp-for="Weight" type="number" step="any" class="form-control" />
+        <span asp-validation-for="Weight" class="text-danger"></span>
+    </div>
+
+    @* degisiklikleri kaydetmek icin formu gonderiyoruz *@
+    <button type="submit" class="btn btn-primary">
+        Değişiklikleri Kaydet
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        İptal
+    </a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
