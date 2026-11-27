@@ -9,4 +9,8 @@ public class AppDbContext : DbContext
         
     }
     public DbSet<Pet> Pets {get; set;}
+
+    // hizmet kayitlarini veritabaninda tutuyoruz
+    public DbSet<Service> Services { get; set; }
+
 }
