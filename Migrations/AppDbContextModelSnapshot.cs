@@ -48,6 +48,27 @@ namespace PatiTakip.Migrations
 
                     b.ToTable("Pets");
                 });
+
+            modelBuilder.Entity("PatiTakip.Models.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
+                });
 #pragma warning restore 612, 618
         }
     }
