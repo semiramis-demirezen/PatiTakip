@@ -26,6 +26,9 @@ namespace PatiTakip.Migrations
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedByName")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("PetId")
                         .HasColumnType("INTEGER");
 
