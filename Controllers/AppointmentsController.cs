@@ -19,15 +19,22 @@ public class AppointmentsController : Controller
     }
 
     
-    // randevulari veritabanindan listeliyoruz
+
+    // randevulari iliskili bilgilerle listeliyoruz
     public IActionResult Index()
     {
-        // kayitli randevulari listeye aliyoruz
-        List<Appointment> appointments = _context.Appointments.ToList();
+        // hayvan veteriner ve hizmet bilgilerini birlikte aliyoruz
+        List<Appointment> appointments = _context.Appointments
+            .Include(a => a.Pet)
+            .Include(a => a.Veterinarian)
+            .Include(a => a.Service)
+            .OrderBy(a => a.AppointmentDate)
+            .ToList();
 
         // randevu listesini sayfaya gonderiyoruz
         return View(appointments);
     }
+
 
 
 

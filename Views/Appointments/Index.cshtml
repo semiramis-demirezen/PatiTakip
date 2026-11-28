@@ -1,4 +1,3 @@
-
 @* controllerdan gelen randevu listesini aliyoruz *@
 @model List<PatiTakip.Models.Appointment>
 
@@ -8,15 +7,14 @@
 
 <h2>Randevular</h2>
 
-@* randevu olusturma sayfasina gidiyoruz *@
+@* yeni randevu olusturma sayfasina yonlendiriyoruz *@
 <a asp-controller="Appointments"
    asp-action="Create"
    class="btn btn-primary mb-3">
     Yeni Randevu Oluştur
 </a>
 
-
-@* formdan gelen bilgilendirme mesajini gosteriyoruz *@
+@* islem sonrasinda gelen mesaji gosteriyoruz *@
 @if (TempData["Message"] != null)
 {
     <div class="alert alert-info">
@@ -24,32 +22,59 @@
     </div>
 }
 
+<p>Kliniğimizde oluşturulan randevular:</p>
 
-<p>Kliniğimizde oluşturulan randevular</p>
-
-@* randevulari tablo halinde gosteriyoruz *@
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Hayvan Numarası</th>
-            <th>Veteriner Numarası</th>
-            <th>Hizmet Numarası</th>
-            <th>Randevu Tarihi</th>
-            <th>Durum</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @* listedeki her randevu icin bir satir olusturuyoruz *@
-        @foreach (var appointment in Model)
-        {
+@* kucuk ekranlarda tablonun kaydirilmasini sagliyoruz *@
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
             <tr>
-                <td>@appointment.PetId</td>
-                <td>@appointment.VeterinarianId</td>
-                <td>@appointment.ServiceId</td>
-                <td>@(appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm"))</td>
-                <td>@appointment.Status</td>
+                <th>Hayvan</th>
+                <th>Veteriner Hekim</th>
+                <th>Hizmet</th>
+                <th>Başlangıç</th>
+                <th>Bitiş</th>
+                <th>Durum</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @* randevu yoksa bilgilendirme mesaji gosteriyoruz *@
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="6" class="text-center">
+                        Henüz randevu bulunmuyor.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @* her randevu icin bir tablo satiri olusturuyoruz *@
+                @foreach (var appointment in Model)
+                {
+                    <tr>
+                        @* numaralar yerine isimleri gosteriyoruz *@
+                        <td>@appointment.Pet.Name</td>
+                        <td>@appointment.Veterinarian.FullName</td>
+                        <td>@appointment.Service.Name</td>
+
+                        @* randevunun baslangic tarihini gosteriyoruz *@
+                        <td>
+                            @(appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm"))
+                        </td>
+
+                        @* hizmet suresine gore bitis saatini hesapliyoruz *@
+                        <td>
+                            @(appointment.AppointmentDate
+                                .AddMinutes(appointment.Service.DurationMinutes)
+                                .ToString("dd.MM.yyyy HH:mm"))
+                        </td>
+
+                        <td>@appointment.Status</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
