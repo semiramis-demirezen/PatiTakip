@@ -10,6 +10,10 @@ public class Vaccination
     // asinin hangi hayvana ait oldugunu belirtiyoruz
     public int PetId { get; set; }
 
+    // asinin hangi hayvana ait oldugunu belirtiyoruz
+    public Pet Pet { get; set; } = null!;
+
+
     // yapilan asinin adi
     public string VaccineName { get; set; } = string.Empty;
 
