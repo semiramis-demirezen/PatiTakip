@@ -28,4 +28,10 @@ public class AppointmentCreateViewModel
     [Required(ErrorMessage = "Randevu tarihi ve saati zorunludur.")]
     [DataType(DataType.DateTime)]
     public DateTime? AppointmentDate { get; set; }
+
+    // randevuyu olusturan kisinin adini aliyoruz
+    [Required(ErrorMessage = "Ad soyad alanı zorunludur.")]
+    [StringLength(100, ErrorMessage = "Ad soyad en fazla 100 karakter olabilir.")]
+    public string? CreatedByName { get; set; }
+
 }

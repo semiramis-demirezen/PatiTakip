@@ -19,6 +19,11 @@ namespace PatiTakip.Models
         // randevunun mevcut durumu
         public string Status { get; set; } = "Bekliyor";
 
+
+        // randevuyu olusturan kisinin adini tutuyoruz
+        public string? CreatedByName { get; set; }
+
+
         // randevuyla iliskili hayvan
         public Pet Pet { get; set; } = null!;
 
