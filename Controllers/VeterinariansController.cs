@@ -71,4 +71,63 @@ public class VeterinariansController : Controller
         _context = context;
     }
 
+
+    // duzenlenecek veterinerin bilgilerini getiriyoruz
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        // veterineri veritabaninda ariyoruz
+        Veterinarian? veterinarian = _context.Veterinarians.Find(id);
+
+        // veteriner bulunamazsa hata donduruyoruz
+        if (veterinarian == null)
+        {
+            return NotFound();
+        }
+
+        // mevcut veteriner bilgilerini forma aktariyoruz
+        VeterinarianCreateViewModel model = new VeterinarianCreateViewModel
+        {
+            FullName = veterinarian.FullName,
+            Specialty = veterinarian.Specialty
+        };
+
+        return View(model);
+    }
+
+    // formdan gelen yeni veteriner bilgilerini kaydediyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, VeterinarianCreateViewModel model)
+    {
+        // duzenlenecek veterineri veritabaninda buluyoruz
+        Veterinarian? veterinarian = _context.Veterinarians.Find(id);
+
+        // veteriner bulunamazsa hata donduruyoruz
+        if (veterinarian == null)
+        {
+            return NotFound();
+        }
+
+        // girilen bilgilerin dogrulugunu kontrol ediyoruz
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // veterinerin bilgilerini guncelliyoruz
+        veterinarian.FullName = model.FullName;
+        veterinarian.Specialty = model.Specialty;
+
+        // degisiklikleri veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // kullaniciya basari mesaji gosteriyoruz
+        TempData["Message"] = "Veteriner hekim bilgileri başarıyla güncellendi.";
+
+        // veterinerler listesine donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
+
 }

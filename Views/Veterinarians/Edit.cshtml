@@ -1,0 +1,45 @@
+
+@model PatiTakip.ViewModels.VeterinarianCreateViewModel
+
+@{
+    ViewData["Title"] = "Veteriner Hekim Düzenle";
+    var veterinarianId = ViewContext.RouteData.Values["id"];
+}
+
+<h2>Veteriner Hekim Düzenle</h2>
+
+<p>Veteriner hekimin bilgilerini aşağıdaki formdan güncelleyebilirsiniz.</p>
+
+<form asp-controller="Veterinarians"
+      asp-action="Edit"
+      asp-route-id="@veterinarianId"
+      method="post">
+
+    @* formdaki dogrulama hatalarini gosteriyoruz *@
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="FullName" class="form-label">Ad Soyad</label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Specialty" class="form-label">Uzmanlık Alanı</label>
+        <input asp-for="Specialty" class="form-control" />
+        <span asp-validation-for="Specialty" class="text-danger"></span>
+    </div>
+
+    @* guncellenen bilgileri controller a gonderiyoruz *@
+    <button type="submit" class="btn btn-primary">
+        Değişiklikleri Kaydet
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        İptal
+    </a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
