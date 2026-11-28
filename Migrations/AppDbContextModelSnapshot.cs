@@ -69,6 +69,25 @@ namespace PatiTakip.Migrations
 
                     b.ToTable("Services");
                 });
+
+            modelBuilder.Entity("PatiTakip.Models.Veterinarian", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Specialty")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Veterinarians");
+                });
 #pragma warning restore 612, 618
         }
     }
