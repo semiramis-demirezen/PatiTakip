@@ -13,4 +13,8 @@ public class AppDbContext : DbContext
     // hizmet kayitlarini veritabaninda tutuyoruz
     public DbSet<Service> Services { get; set; }
 
+    // veteriner hekim kayitlarini veritabaninda tutuyoruz
+    public DbSet<Veterinarian> Veterinarians { get; set; }
+
+
 }
