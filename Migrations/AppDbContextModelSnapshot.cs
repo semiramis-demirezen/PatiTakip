@@ -17,6 +17,39 @@ namespace PatiTakip.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
+            modelBuilder.Entity("PatiTakip.Models.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PetId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("VeterinarianId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("VeterinarianId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("PatiTakip.Models.Pet", b =>
                 {
                     b.Property<int>("Id")
@@ -113,6 +146,33 @@ namespace PatiTakip.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Veterinarians");
+                });
+
+            modelBuilder.Entity("PatiTakip.Models.Appointment", b =>
+                {
+                    b.HasOne("PatiTakip.Models.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PatiTakip.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PatiTakip.Models.Veterinarian", "Veterinarian")
+                        .WithMany()
+                        .HasForeignKey("VeterinarianId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("Veterinarian");
                 });
 
             modelBuilder.Entity("PatiTakip.Models.Vaccination", b =>
