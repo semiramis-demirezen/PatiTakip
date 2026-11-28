@@ -1,0 +1,97 @@
+@model PatiTakip.ViewModels.AppointmentCreateViewModel
+
+@{
+    ViewData["Title"] = "Randevu Düzenle";
+    var appointmentId = ViewContext.RouteData.Values["id"];
+}
+
+<h2>Randevu Düzenle</h2>
+
+<p>Randevu bilgilerini aşağıdaki formdan güncelleyebilirsiniz.</p>
+
+@* guncellenen randevu bilgilerini controller a gonderiyoruz *@
+<form asp-controller="Appointments"
+      asp-action="Edit"
+      asp-route-id="@appointmentId"
+      method="post">
+
+    @* formdaki genel dogrulama hatalarini gosteriyoruz *@
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    @* kayitli hayvanlar arasindan secim yapiyoruz *@
+    <div class="mb-3">
+        <label asp-for="PetId" class="form-label">
+            Evcil Hayvan
+        </label>
+
+        <select asp-for="PetId"
+                asp-items="ViewBag.Pets"
+                class="form-select">
+            <option value="">Evcil hayvan seçiniz</option>
+        </select>
+
+        <span asp-validation-for="PetId"
+              class="text-danger"></span>
+    </div>
+
+    @* kayitli veterinerler arasindan secim yapiyoruz *@
+    <div class="mb-3">
+        <label asp-for="VeterinarianId" class="form-label">
+            Veteriner Hekim
+        </label>
+
+        <select asp-for="VeterinarianId"
+                asp-items="ViewBag.Veterinarians"
+                class="form-select">
+            <option value="">Veteriner hekim seçiniz</option>
+        </select>
+
+        <span asp-validation-for="VeterinarianId"
+              class="text-danger"></span>
+    </div>
+
+    @* kayitli hizmetler arasindan secim yapiyoruz *@
+    <div class="mb-3">
+        <label asp-for="ServiceId" class="form-label">
+            Hizmet
+        </label>
+
+        <select asp-for="ServiceId"
+                asp-items="ViewBag.Services"
+                class="form-select">
+            <option value="">Hizmet seçiniz</option>
+        </select>
+
+        <span asp-validation-for="ServiceId"
+              class="text-danger"></span>
+    </div>
+
+    @* randevunun tarihini ve saatini duzenliyoruz *@
+    <div class="mb-3">
+        <label asp-for="AppointmentDate" class="form-label">
+            Randevu Tarihi ve Saati
+        </label>
+
+        <input asp-for="AppointmentDate"
+               asp-format="{0:yyyy-MM-ddTHH:mm}"
+               type="datetime-local"
+               class="form-control" />
+
+        <span asp-validation-for="AppointmentDate"
+              class="text-danger"></span>
+    </div>
+
+    @* degisiklikleri kaydetmek icin formu gonderiyoruz *@
+    <button type="submit" class="btn btn-primary">
+        Değişiklikleri Kaydet
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        İptal
+    </a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
