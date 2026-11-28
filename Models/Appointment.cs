@@ -1,24 +1,31 @@
-
-namespace PatiTakip.Models;
-
-// randevu bilgilerini tutuyoruz
-public class Appointment
+namespace PatiTakip.Models
 {
-    // her randevunun kendine ait numarasi
-    public int Id { get; set; }
+    public class Appointment
+    {
+        public int Id { get; set; }
 
-    // randevunun hangi hayvana ait oldugunu tutuyoruz
-    public int PetId { get; set; }
+        // randevunun ait oldugu hayvan
+        public int PetId { get; set; }
 
-    // randevuya atanacak veterinerin numarasi
-    public int VeterinarianId { get; set; }
+        // randevuyu yapacak veteriner
+        public int VeterinarianId { get; set; }
 
-    // randevuda alinacak hizmetin numarasi
-    public int ServiceId { get; set; }
+        // randevuda verilecek hizmet
+        public int ServiceId { get; set; }
 
-    // randevunun tarihini ve saatini tutuyoruz
-    public DateTime AppointmentDate { get; set; }
+        // randevunun tarihi ve saati
+        public DateTime AppointmentDate { get; set; }
 
-    // randevunun durumunu tutuyoruz
-    public string Status { get; set; } = "Bekliyor";
+        // randevunun mevcut durumu
+        public string Status { get; set; } = "Bekliyor";
+
+        // randevuyla iliskili hayvan
+        public Pet Pet { get; set; } = null!;
+
+        // randevuyla iliskili veteriner
+        public Veterinarian Veterinarian { get; set; } = null!;
+
+        // randevuyla iliskili hizmet
+        public Service Service { get; set; } = null!;
+    }
 }

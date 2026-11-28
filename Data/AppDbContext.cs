@@ -19,6 +19,10 @@ public class AppDbContext : DbContext
     // asi kayitlarini veritabaninda tutuyoruz
     public DbSet<Vaccination> Vaccinations { get; set; }
 
+    // randevu kayitlarini veritabaninda tutuyoruz
+    public DbSet<Appointment> Appointments { get; set; }
+
+
 
     // veritabani iliskilerini tanimliyoruz
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +35,25 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(v => v.PetId)
             .OnDelete(DeleteBehavior.Restrict);
-    }
+        // randevuyu evcil hayvan ile iliskilendiriyoruz
+        modelBuilder.Entity<Appointment>()
+            .HasOne(a => a.Pet)
+            .WithMany()
+            .HasForeignKey(a => a.PetId)
+            .OnDelete(DeleteBehavior.Restrict);
 
+        // randevuyu veteriner ile iliskilendiriyoruz
+        modelBuilder.Entity<Appointment>()
+            .HasOne(a => a.Veterinarian)
+            .WithMany()
+            .HasForeignKey(a => a.VeterinarianId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // randevuyu hizmet ile iliskilendiriyoruz
+        modelBuilder.Entity<Appointment>()
+            .HasOne(a => a.Service)
+            .WithMany()
+            .HasForeignKey(a => a.ServiceId)
+            .OnDelete(DeleteBehavior.Restrict);
+    }
 }
