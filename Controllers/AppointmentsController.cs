@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PatiTakip.Models;
 using PatiTakip.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PatiTakip.Controllers;
 
@@ -38,10 +39,12 @@ public class AppointmentsController : Controller
 
 
 
-    // randevu olusturma formunu aciyoruz
+    // randevu olusturma formunu gosteriyoruz
     [HttpGet]
     public IActionResult Create()
     {
+        // hayvan veteriner ve hizmet listelerini hazirliyoruz
+        LoadFormOptions();
         return View();
     }
 
@@ -51,11 +54,35 @@ public class AppointmentsController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Create(AppointmentCreateViewModel model)
     {
+        // hata durumunda listelerin yeniden gosterilmesini sagliyoruz
+        LoadFormOptions();
         // form bilgilerinin dogrulugunu kontrol ediyoruz
         if (!ModelState.IsValid)
         {
             return View(model);
         }
+
+
+        // turkiye saatine gore su anki zamani aliyoruz
+        TimeZoneInfo turkeyTimeZone =
+            TimeZoneInfo.FindSystemTimeZoneById("Europe/Istanbul");
+
+        DateTime currentDate = TimeZoneInfo.ConvertTimeFromUtc(
+            DateTime.UtcNow,
+            turkeyTimeZone
+        );
+
+        // gecmis tarih ve saatlere randevu verilmesini engelliyoruz
+        if (model.AppointmentDate.Value <= currentDate)
+        {
+            ModelState.AddModelError(
+                "AppointmentDate",
+                "Randevu tarihi ve saati gelecekte olmalıdır."
+            );
+
+            return View(model);
+        }
+
 
         // secilen hayvanin kayitli olup olmadigini kontrol ediyoruz
         bool petExists = _context.Pets
@@ -165,5 +192,32 @@ public class AppointmentsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    // randevu formundaki secim listelerini hazirliyoruz
+    private void LoadFormOptions()
+    {
+        // kayitli hayvanlari listeye aliyoruz
+        ViewBag.Pets = new SelectList(
+            _context.Pets.OrderBy(p => p.Name).ToList(),
+            "Id",
+            "Name"
+        );
 
+        // kayitli veterinerleri listeye aliyoruz
+        ViewBag.Veterinarians = new SelectList(
+            _context.Veterinarians.OrderBy(v => v.FullName).ToList(),
+            "Id",
+            "FullName"
+        );
+
+        // hizmetlerin adlarini ve surelerini gosteriyoruz
+        ViewBag.Services = _context.Services
+            .OrderBy(s => s.Name)
+            .ToList()
+            .Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = $"{s.Name} ({s.DurationMinutes} dakika)"
+            })
+            .ToList();
+    }
 }

@@ -1,57 +1,95 @@
-@* randevu formunda kullanacagimiz bilgileri aliyoruz *@
+
 @model PatiTakip.ViewModels.AppointmentCreateViewModel
 
 @{
-    ViewData["Title"] = "Randevu Oluştur";
+    ViewData["Title"] = "Yeni Randevu Oluştur";
 }
 
 <h2>Yeni Randevu Oluştur</h2>
 
-@* formdaki bilgileri controller a gonderiyoruz *@
-<form asp-controller="Appointments" asp-action="Create" method="post">
+<p>Randevu oluşturmak için aşağıdaki bilgileri doldurunuz.</p>
 
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@* randevu bilgilerini controller a gonderiyoruz *@
+<form asp-controller="Appointments"
+      asp-action="Create"
+      method="post">
 
-    @* randevu alinacak hayvanin numarasini aliyoruz *@
+    @* formdaki genel dogrulama hatalarini gosteriyoruz *@
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    @* kayitli hayvanlar arasindan secim yapiyoruz *@
     <div class="mb-3">
-        <label asp-for="PetId" class="form-label"></label>
-        <input asp-for="PetId" class="form-control" data-val-number="Lütfen geçerli bir hayvan numarası giriniz." />
-        <span asp-validation-for="PetId" class="text-danger"></span>
+        <label asp-for="PetId" class="form-label">
+            Evcil Hayvan
+        </label>
+
+        <select asp-for="PetId"
+                asp-items="ViewBag.Pets"
+                class="form-select">
+            <option value="">Evcil hayvan seçiniz</option>
+        </select>
+
+        <span asp-validation-for="PetId"
+              class="text-danger"></span>
     </div>
 
-    @* veteriner numarasini aliyoruz *@
+    @* kayitli veterinerler arasindan secim yapiyoruz *@
     <div class="mb-3">
-        <label asp-for="VeterinarianId" class="form-label"></label>
-        <input asp-for="VeterinarianId" class="form-control" data-val-number="Lütfen geçerli bir hayvan numarası giriniz." />
-        <span asp-validation-for="VeterinarianId" class="text-danger"></span>
+        <label asp-for="VeterinarianId" class="form-label">
+            Veteriner Hekim
+        </label>
+
+        <select asp-for="VeterinarianId"
+                asp-items="ViewBag.Veterinarians"
+                class="form-select">
+            <option value="">Veteriner hekim seçiniz</option>
+        </select>
+
+        <span asp-validation-for="VeterinarianId"
+              class="text-danger"></span>
     </div>
 
-    @* hizmet numarasini aliyoruz *@
+    @* kayitli hizmetler arasindan secim yapiyoruz *@
     <div class="mb-3">
-        <label asp-for="ServiceId" class="form-label"></label>
-        <input asp-for="ServiceId" class="form-control" data-val-number="Lütfen geçerli bir hayvan numarası giriniz." />
-        <span asp-validation-for="ServiceId" class="text-danger"></span>
+        <label asp-for="ServiceId" class="form-label">
+            Hizmet
+        </label>
+
+        <select asp-for="ServiceId"
+                asp-items="ViewBag.Services"
+                class="form-select">
+            <option value="">Hizmet seçiniz</option>
+        </select>
+
+        <span asp-validation-for="ServiceId"
+              class="text-danger"></span>
     </div>
 
-    @* randevu tarihini ve saatini aliyoruz *@
+    @* randevunun tarihini ve saatini seciyoruz *@
     <div class="mb-3">
-        <label asp-for="AppointmentDate" class="form-label"></label>
+        <label asp-for="AppointmentDate" class="form-label">
+            Randevu Tarihi ve Saati
+        </label>
+
         <input asp-for="AppointmentDate"
                type="datetime-local"
                class="form-control" />
-        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+
+        <span asp-validation-for="AppointmentDate"
+              class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Kaydet</button>
+    @* randevuyu kaydetmek icin formu gonderiyoruz *@
+    <button type="submit" class="btn btn-primary">
+        Randevu Oluştur
+    </button>
 
-    <a asp-controller="Appointments"
-       asp-action="Index"
-       class="btn btn-secondary">
-        Geri Dön
+    <a asp-action="Index" class="btn btn-secondary">
+        İptal
     </a>
 </form>
 
-@* form hatalarini gostermek icin gerekli dosyayi ekliyoruz *@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
