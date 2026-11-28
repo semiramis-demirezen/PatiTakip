@@ -1,0 +1,50 @@
+
+@model PatiTakip.Models.Vaccination
+
+@{
+    ViewData["Title"] = "Aşı Kaydı Sil";
+}
+
+<h2>Aşı Kaydı Sil</h2>
+
+<div class="alert alert-warning">
+    Bu aşı kaydını silmek istediğinize emin misiniz?
+    Bu işlem geri alınamaz.
+</div>
+
+@* silinecek asi kaydinin bilgilerini gosteriyoruz *@
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">@Model.VaccineName</h5>
+
+        <p class="card-text">
+            <strong>Hayvan Numarası:</strong>
+            @Model.PetId
+        </p>
+
+        <p class="card-text">
+            <strong>Uygulama Tarihi:</strong>
+            @(Model.DateAdministered.ToString("dd.MM.yyyy"))
+        </p>
+
+        <p class="card-text">
+            <strong>Sonraki Doz Tarihi:</strong>
+            @(Model.NextDoseDate.ToString("dd.MM.yyyy"))
+        </p>
+    </div>
+</div>
+
+@* silme islemini post istegiyle gonderiyoruz *@
+<form asp-controller="Vaccinations"
+      asp-action="DeleteConfirmed"
+      asp-route-id="@Model.Id"
+      method="post">
+
+    <button type="submit" class="btn btn-danger">
+        Evet, Sil
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        İptal
+    </a>
+</form>

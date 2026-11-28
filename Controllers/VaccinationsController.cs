@@ -160,4 +160,50 @@ public class VaccinationsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+
+    // silinecek asi kaydinin bilgilerini getiriyoruz
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        // asi kaydini veritabaninda ariyoruz
+        Vaccination? vaccination = _context.Vaccinations.Find(id);
+
+        // asi kaydi bulunamazsa hata donduruyoruz
+        if (vaccination == null)
+        {
+            return NotFound();
+        }
+
+        // asi bilgilerini silme onay sayfasina gonderiyoruz
+        return View(vaccination);
+    }
+
+    // onaylanan asi kaydini veritabanindan siliyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        // silinecek asi kaydini buluyoruz
+        Vaccination? vaccination = _context.Vaccinations.Find(id);
+
+        // asi kaydi bulunamazsa hata donduruyoruz
+        if (vaccination == null)
+        {
+            return NotFound();
+        }
+
+        // asi kaydini silinmek uzere isaretliyoruz
+        _context.Vaccinations.Remove(vaccination);
+
+        // degisikligi veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // kullaniciya basari mesaji gosteriyoruz
+        TempData["Message"] = "Aşı kaydı başarıyla silindi.";
+
+        // asi kayitlari listesine geri donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
+
 }
