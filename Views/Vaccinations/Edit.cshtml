@@ -1,0 +1,68 @@
+
+@model PatiTakip.ViewModels.VaccinationCreateViewModel
+
+@{
+    ViewData["Title"] = "Aşı Kaydı Düzenle";
+    var vaccinationId = ViewContext.RouteData.Values["id"];
+}
+
+<h2>Aşı Kaydı Düzenle</h2>
+
+<p>Aşı kaydının bilgilerini aşağıdaki formdan güncelleyebilirsiniz.</p>
+
+<form asp-controller="Vaccinations"
+      asp-action="Edit"
+      asp-route-id="@vaccinationId"
+      method="post">
+
+    @* formdaki dogrulama hatalarini gosteriyoruz *@
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="PetId" class="form-label">Hayvan Numarası</label>
+        <input asp-for="PetId"
+               type="number"
+               class="form-control"
+               data-val-number="Lütfen geçerli bir hayvan numarası giriniz." />
+        <span asp-validation-for="PetId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="VaccineName" class="form-label">Aşı Adı</label>
+        <input asp-for="VaccineName" class="form-control" />
+        <span asp-validation-for="VaccineName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DateAdministered" class="form-label">
+            Uygulama Tarihi
+        </label>
+        <input asp-for="DateAdministered"
+               type="date"
+               class="form-control" />
+        <span asp-validation-for="DateAdministered" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NextDoseDate" class="form-label">
+            Sonraki Doz Tarihi
+        </label>
+        <input asp-for="NextDoseDate"
+               type="date"
+               class="form-control" />
+        <span asp-validation-for="NextDoseDate" class="text-danger"></span>
+    </div>
+
+    @* guncellenen bilgileri controller a gonderiyoruz *@
+    <button type="submit" class="btn btn-primary">
+        Değişiklikleri Kaydet
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        İptal
+    </a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

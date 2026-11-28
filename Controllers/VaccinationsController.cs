@@ -85,4 +85,79 @@ public class VaccinationsController : Controller
         _context = context;
     }
 
+    // duzenlenecek asi kaydinin bilgilerini getiriyoruz
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        // asi kaydini veritabaninda ariyoruz
+        Vaccination? vaccination = _context.Vaccinations.Find(id);
+
+        // kayit bulunamazsa hata donduruyoruz
+        if (vaccination == null)
+        {
+            return NotFound();
+        }
+
+        // mevcut bilgileri duzenleme formuna aktariyoruz
+        VaccinationCreateViewModel model = new VaccinationCreateViewModel
+        {
+            PetId = vaccination.PetId,
+            VaccineName = vaccination.VaccineName,
+            DateAdministered = vaccination.DateAdministered,
+            NextDoseDate = vaccination.NextDoseDate
+        };
+
+        return View(model);
+    }
+
+    // formdan gelen yeni asi bilgilerini kaydediyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, VaccinationCreateViewModel model)
+    {
+        // duzenlenecek asi kaydini buluyoruz
+        Vaccination? vaccination = _context.Vaccinations.Find(id);
+
+        // kayit bulunamazsa hata donduruyoruz
+        if (vaccination == null)
+        {
+            return NotFound();
+        }
+
+        // girilen bilgilerin dogrulugunu kontrol ediyoruz
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        // girilen numaraya ait hayvan var mi kontrol ediyoruz
+        bool petExists = _context.Pets.Any(p => p.Id == model.PetId.Value);
+
+        if (!petExists)
+        {
+            // hayvan bulunamazsa formda hata gosteriyoruz
+            ModelState.AddModelError(
+                "PetId",
+                "Girilen numaraya ait evcil hayvan bulunamadı."
+            );
+
+            return View(model);
+        }
+
+        // mevcut asi kaydinin bilgilerini guncelliyoruz
+        vaccination.PetId = model.PetId.Value;
+        vaccination.VaccineName = model.VaccineName;
+        vaccination.DateAdministered = model.DateAdministered.Value;
+        vaccination.NextDoseDate = model.NextDoseDate.Value;
+
+        // degisiklikleri veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // basari mesajini hazirliyoruz
+        TempData["Message"] = "Aşı kaydı başarıyla güncellendi.";
+
+        // asi kayitlari listesine donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
 }

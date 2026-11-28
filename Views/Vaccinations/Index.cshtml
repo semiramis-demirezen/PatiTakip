@@ -35,6 +35,7 @@
             <th>Aşı Adı</th>
             <th>Yapıldığı Tarih</th>
             <th>Sonraki Doz Tarihi</th>
+            <th>İşlemler</th>
         </tr>
     </thead>
 
@@ -47,6 +48,8 @@
                 <td>@vaccination.VaccineName</td>
                 <td>@(vaccination.DateAdministered.ToString("dd.MM.yyyy"))</td>
                 <td>@(vaccination.NextDoseDate.ToString("dd.MM.yyyy"))</td>
+                @* asi kaydini duzenleme sayfasina yonlendiriyoruz *@
+                <td><a asp-controller="Vaccinations" asp-action="Edit" asp-route-id="@vaccination.Id" class="btn btn-warning btn-sm">Düzenle</a></td>
             </tr>
         }
     </tbody>
