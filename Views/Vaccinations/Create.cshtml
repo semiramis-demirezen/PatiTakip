@@ -16,7 +16,7 @@
     @* hayvan numarasini aliyoruz *@
     <div class="mb-3">
         <label asp-for="PetId" class="form-label"></label>
-        <input asp-for="PetId" class="form-control" />
+        <input asp-for="PetId" class="form-control" data-val-number="Lütfen geçerli bir hayvan numarası giriniz" />
         <span asp-validation-for="PetId" class="text-danger"></span>
     </div>
 
