@@ -1,3 +1,4 @@
+
 @* controllerdan gelen randevu listesini aliyoruz *@
 @model List<PatiTakip.Models.Appointment>
 
@@ -7,7 +8,7 @@
 
 <h2>Randevular</h2>
 
-@* yeni randevu olusturma sayfasina yonlendiriyoruz *@
+@* yeni randevu sayfasina yonlendiriyoruz *@
 <a asp-controller="Appointments"
    asp-action="Create"
    class="btn btn-primary mb-3">
@@ -29,6 +30,7 @@
     <table class="table table-striped align-middle">
         <thead>
             <tr>
+                <th>Oluşturan Kişi</th>
                 <th>Hayvan</th>
                 <th>Veteriner Hekim</th>
                 <th>Hizmet</th>
@@ -40,32 +42,39 @@
         </thead>
 
         <tbody>
-            @* randevu yoksa bilgilendirme mesaji gosteriyoruz *@
+            @* kayit yoksa bilgilendirme mesaji gosteriyoruz *@
             @if (Model.Count == 0)
             {
                 <tr>
-                    <td colspan="7" class="text-center">
+                    <td colspan="8" class="text-center">
                         Henüz randevu bulunmuyor.
                     </td>
                 </tr>
             }
             else
             {
-                @* her randevu icin bir tablo satiri olusturuyoruz *@
+                @* kayitli randevulari tabloya ekliyoruz *@
                 @foreach (var appointment in Model)
                 {
                     <tr>
-                        @* numaralar yerine isimleri gosteriyoruz *@
+                        @* olusturan kisi bilgisi yoksa mesaj gosteriyoruz *@
+                        <td>
+                            @(string.IsNullOrWhiteSpace(appointment.CreatedByName)
+                                ? "Belirtilmemiş"
+                                : appointment.CreatedByName)
+                        </td>
+
+                        @* randevuya ait isimleri gosteriyoruz *@
                         <td>@appointment.Pet.Name</td>
                         <td>@appointment.Veterinarian.FullName</td>
                         <td>@appointment.Service.Name</td>
 
-                        @* randevunun baslangic tarihini gosteriyoruz *@
+                        @* randevunun baslangic zamanini gosteriyoruz *@
                         <td>
                             @(appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm"))
                         </td>
 
-                        @* hizmet suresine gore bitis saatini hesapliyoruz *@
+                        @* hizmet suresine gore bitis zamanini hesapliyoruz *@
                         <td>
                             @(appointment.AppointmentDate
                                 .AddMinutes(appointment.Service.DurationMinutes)
@@ -74,8 +83,15 @@
 
                         <td>@appointment.Status</td>
 
-                        @* randevuyu duzenleme sayfasina yonlendiriyoruz *@
-                        <td><a asp-controller="Appointments" asp-action="Edit" asp-route-id="@appointment.Id" class="btn btn-warning btn-sm">Düzenle</a></td>
+                        @* randevu duzenleme sayfasina yonlendiriyoruz *@
+                        <td>
+                            <a asp-controller="Appointments"
+                               asp-action="Edit"
+                               asp-route-id="@appointment.Id"
+                               class="btn btn-warning btn-sm">
+                                Düzenle
+                            </a>
+                        </td>
                     </tr>
                 }
             }

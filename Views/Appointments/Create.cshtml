@@ -17,6 +17,22 @@
     @* formdaki genel dogrulama hatalarini gosteriyoruz *@
     <div asp-validation-summary="ModelOnly"
          class="text-danger"></div>
+    
+
+    @* randevuyu olusturan kisinin adini aliyoruz *@
+    <div class="mb-3">
+        <label asp-for="CreatedByName" class="form-label">
+            Randevuyu Oluşturan Kişinin Adı Soyadı
+        </label>
+
+        <input asp-for="CreatedByName"
+               class="form-control"
+               placeholder="Adınızı ve soyadınızı giriniz" />
+
+        <span asp-validation-for="CreatedByName"
+              class="text-danger"></span>
+    </div>
+
 
     @* kayitli hayvanlar arasindan secim yapiyoruz *@
     <div class="mb-3">

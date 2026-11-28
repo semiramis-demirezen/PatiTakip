@@ -176,7 +176,10 @@ public class AppointmentsController : Controller
             VeterinarianId = model.VeterinarianId.Value,
             ServiceId = model.ServiceId.Value,
             AppointmentDate = model.AppointmentDate.Value,
-            Status = "Bekliyor"
+            Status = "Bekliyor",
+            // randevuyu olusturan kisinin adini kaydediyoruz
+            CreatedByName = model.CreatedByName
+
         };
 
         // randevuyu veritabanina ekliyoruz
@@ -240,7 +243,8 @@ public class AppointmentsController : Controller
             PetId = appointment.PetId,
             VeterinarianId = appointment.VeterinarianId,
             ServiceId = appointment.ServiceId,
-            AppointmentDate = appointment.AppointmentDate
+            AppointmentDate = appointment.AppointmentDate,
+            CreatedByName = appointment.CreatedByName
         };
 
         // secim listelerini hazirliyoruz
@@ -365,6 +369,7 @@ public class AppointmentsController : Controller
         appointment.VeterinarianId = model.VeterinarianId.Value;
         appointment.ServiceId = model.ServiceId.Value;
         appointment.AppointmentDate = model.AppointmentDate.Value;
+        appointment.CreatedByName = model.CreatedByName;
 
         // degisiklikleri veritabanina kaydediyoruz
         _context.SaveChanges();
