@@ -43,15 +43,25 @@
                 <td>@veterinarian.FullName</td>
                 <td>@veterinarian.Specialty</td>
 
-                @* veterineri duzenleme sayfasina yonlendiriyoruz *@
+                
                 <td>
+                    @* veterineri duzenleme sayfasina yonlendiriyoruz *@
                     <a asp-controller="Veterinarians"
-                       asp-action="Edit"
-                       asp-route-id="@veterinarian.Id"
-                       class="btn btn-warning btn-sm">
+                    asp-action="Edit"
+                    asp-route-id="@veterinarian.Id"
+                    class="btn btn-warning btn-sm">
                         Düzenle
                     </a>
+
+                    @* veterineri silme onay sayfasina yonlendiriyoruz *@
+                    <a asp-controller="Veterinarians"
+                    asp-action="Delete"
+                    asp-route-id="@veterinarian.Id"
+                    class="btn btn-danger btn-sm">
+                        Sil
+                    </a>
                 </td>
+
             </tr>
         }
     </tbody>

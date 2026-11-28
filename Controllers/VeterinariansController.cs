@@ -130,4 +130,50 @@ public class VeterinariansController : Controller
     }
 
 
+    // silinecek veterinerin bilgilerini getiriyoruz
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        // veterineri veritabaninda ariyoruz
+        Veterinarian? veterinarian = _context.Veterinarians.Find(id);
+
+        // veteriner bulunamazsa hata donduruyoruz
+        if (veterinarian == null)
+        {
+            return NotFound();
+        }
+
+        // veterineri silme onay sayfasina gonderiyoruz
+        return View(veterinarian);
+    }
+
+    // onaylanan veterineri veritabanindan siliyoruz
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        // silinecek veterineri veritabaninda buluyoruz
+        Veterinarian? veterinarian = _context.Veterinarians.Find(id);
+
+        // veteriner bulunamazsa hata donduruyoruz
+        if (veterinarian == null)
+        {
+            return NotFound();
+        }
+
+        // veterineri silinmek uzere isaretliyoruz
+        _context.Veterinarians.Remove(veterinarian);
+
+        // silme islemini veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // kullaniciya basari mesaji gosteriyoruz
+        TempData["Message"] = "Veteriner hekim başarıyla silindi.";
+
+        // veterinerler listesine donuyoruz
+        return RedirectToAction(nameof(Index));
+    }
+
+
+
 }
