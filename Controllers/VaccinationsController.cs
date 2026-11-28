@@ -1,40 +1,23 @@
 using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
+using PatiTakip.Data;
 
 namespace PatiTakip.Controllers;
 
 public class VaccinationsController : Controller
 {
-    // asi kayitlarini listelemek icin bu metodu kullaniyoruz
+    
+    // asi kayitlarini veritabanindan listeliyoruz
     public IActionResult Index()
     {
-        // simdilik ornek asi kayitlari olusturuyoruz
-        List<Vaccination> vaccinations = new List<Vaccination>();
+        // kayitli asilari listeye aliyoruz
+        List<Vaccination> vaccinations = _context.Vaccinations.ToList();
 
-        // pamukun asi kaydini ekliyoruz
-        vaccinations.Add(new Vaccination
-        {
-            Id = 1,
-            PetId = 1,
-            VaccineName = "Kuduz Asisi",
-            DateAdministered = new DateTime(2026, 5, 10),
-            NextDoseDate = new DateTime(2027, 5, 10)
-        });
-
-        // karabasin asi kaydini ekliyoruz
-        vaccinations.Add(new Vaccination
-        {
-            Id = 2,
-            PetId = 2,
-            VaccineName = "Kuduz Asisi",
-            DateAdministered = new DateTime(2026, 3, 15),
-            NextDoseDate = new DateTime(2027, 3, 15)
-        });
-
-        // asi kayitlarini sayfaya gonderiyoruz
+        // asi listesini sayfaya gonderiyoruz
         return View(vaccinations);
     }
+
 
 
     // asi kaydi ekleme formunu aciyoruz
@@ -44,25 +27,62 @@ public class VaccinationsController : Controller
         return View();
     }
 
-
-
-
-    // formdan gonderilen asi bilgilerini aliyoruz
+    
+    // formdan gelen asi bilgilerini aliyoruz
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(VaccinationCreateViewModel model)
     {
-        // girilen bilgilerin dogru olup olmadigini kontrol ediyoruz
+        // form bilgilerinin dogrulugunu kontrol ediyoruz
         if (!ModelState.IsValid)
         {
             return View(model);
         }
 
-        // veritabani kaydini daha sonra ekleyecegiz
-        TempData["Message"] = "Form doğrulandı ancak aşı kaydı henüz kaydedilmedi.";
+        // girilen numaraya ait hayvan var mi kontrol ediyoruz
+        bool petExists = _context.Pets.Any(p => p.Id == model.PetId.Value);
 
-        // asi kayitlari listesine geri donuyoruz
+        if (!petExists)
+        {
+            // hayvan bulunamazsa formda hata gosteriyoruz
+            ModelState.AddModelError(
+                "PetId",
+                "Girilen numaraya ait evcil hayvan bulunamadı."
+            );
+
+            return View(model);
+        }
+
+        // form bilgileriyle yeni asi kaydi olusturuyoruz
+        Vaccination vaccination = new Vaccination
+        {
+            PetId = model.PetId.Value,
+            VaccineName = model.VaccineName,
+            DateAdministered = model.DateAdministered.Value,
+            NextDoseDate = model.NextDoseDate.Value
+        };
+
+        // asi kaydini veritabanina ekliyoruz
+        _context.Vaccinations.Add(vaccination);
+
+        // degisiklikleri veritabanina kaydediyoruz
+        _context.SaveChanges();
+
+        // kullaniciya basari mesaji gosteriyoruz
+        TempData["Message"] = "Aşı kaydı başarıyla oluşturuldu.";
+
+        // asi kayitlari listesine donuyoruz
         return RedirectToAction(nameof(Index));
+    }
+
+
+    // veritabani islemleri icin context kullaniyoruz
+    private readonly AppDbContext _context;
+
+    // veritabani baglantisini controller a aliyoruz
+    public VaccinationsController(AppDbContext context)
+    {
+        _context = context;
     }
 
 }
