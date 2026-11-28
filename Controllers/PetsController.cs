@@ -207,12 +207,13 @@ public class PetsController : Controller
         return View(pet);
     }
 
+    
     // onaylanan hayvani veritabanindan siliyoruz
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult DeleteConfirmed(int id)
     {
-        // silinecek hayvani buluyoruz
+        // silinecek hayvani veritabaninda ariyoruz
         Pet? pet = _context.Pets.Find(id);
 
         // hayvan bulunamazsa hata donduruyoruz
@@ -221,19 +222,29 @@ public class PetsController : Controller
             return NotFound();
         }
 
-        // hayvani silinecek kayitlar arasina ekliyoruz
+        // hayvanin asi kaydi olup olmadigini kontrol ediyoruz
+        bool hasVaccinations = _context.Vaccinations
+            .Any(v => v.PetId == id);
+
+        // asi kaydi varsa hayvanin silinmesini engelliyoruz
+        if (hasVaccinations)
+        {
+            TempData["Message"] =
+                "Bu evcil hayvanın aşı kayıtları bulunduğu için silme işlemi yapılamadı.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // hayvani silinmek uzere isaretliyoruz
         _context.Pets.Remove(pet);
 
         // silme islemini veritabanina kaydediyoruz
         _context.SaveChanges();
 
-        // kullaniciya bilgi veriyoruz
+        // kullaniciya basari mesaji gosteriyoruz
         TempData["Message"] = "Evcil hayvan başarıyla silindi.";
 
         // hayvan listesine geri donuyoruz
         return RedirectToAction(nameof(Index));
     }
-
-
-
 }
