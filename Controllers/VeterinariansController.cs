@@ -1,36 +1,23 @@
 using PatiTakip.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using PatiTakip.Models;
+using PatiTakip.Data;
 
 namespace PatiTakip.Controllers;
 
 public class VeterinariansController : Controller
 {
-    // veteriner hekimleri listelemek icin bu metodu kullaniyoruz
+    
+    // veterinerleri veritabanindan listeliyoruz
     public IActionResult Index()
     {
-        // simdilik ornek veteriner bilgileri kullaniyoruz
-        List<Veterinarian> veterinarians = new List<Veterinarian>();
+        // kayitli veterinerleri listeye aliyoruz
+        List<Veterinarian> veterinarians = _context.Veterinarians.ToList();
 
-        // ilk veterineri listeye ekliyoruz
-        veterinarians.Add(new Veterinarian
-        {
-            Id = 1,
-            FullName = "Ayşe Yılmaz",
-            Specialty = "Küçük Hayvanlar"
-        });
-
-        // ikinci veterineri listeye ekliyoruz
-        veterinarians.Add(new Veterinarian
-        {
-            Id = 2,
-            FullName = "Mehmet Demir",
-            Specialty = "Cerrahi"
-        });
-
-        // veteriner listesini view sayfasina gonderiyoruz
+        // listeyi sayfaya gonderiyoruz
         return View(veterinarians);
     }
+
 
 
     // veteriner ekleme formunu aciyoruz
@@ -41,23 +28,47 @@ public class VeterinariansController : Controller
     }
 
 
-    // formdan gonderilen veteriner bilgilerini aliyoruz
+    
+    // formdan gelen veteriner bilgilerini aliyoruz
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(VeterinarianCreateViewModel model)
     {
-        // girilen bilgileri kontrol ediyoruz
+        // girilen bilgilerin dogrulugunu kontrol ediyoruz
         if (!ModelState.IsValid)
         {
             return View(model);
         }
 
-        // veritabani kaydini daha sonra ekleyecegiz
-        TempData["Message"] = "Form doğrulandı ancak veteriner henüz kaydedilmedi";
+        // form bilgileriyle yeni veteriner olusturuyoruz
+        Veterinarian veterinarian = new Veterinarian
+        {
+            FullName = model.FullName,
+            Specialty = model.Specialty
+        };
 
-        // veteriner listesine geri donuyoruz
+        // veterineri veritabanina ekliyoruz
+        _context.Veterinarians.Add(veterinarian);
+
+        // kaydi veritabanina uyguluyoruz
+        _context.SaveChanges();
+
+        // kullaniciya basari mesaji gosteriyoruz
+        TempData["Message"] = "Veteriner hekim başarıyla kaydedildi.";
+
+        // veterinerler listesine donuyoruz
         return RedirectToAction(nameof(Index));
     }
 
+
+
+    // veritabani islemleri icin context kullaniyoruz
+    private readonly AppDbContext _context;
+
+    // veritabani baglantisini controller a aliyoruz
+    public VeterinariansController(AppDbContext context)
+    {
+        _context = context;
+    }
 
 }
