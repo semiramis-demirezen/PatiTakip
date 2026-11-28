@@ -70,6 +70,32 @@ namespace PatiTakip.Migrations
                     b.ToTable("Services");
                 });
 
+            modelBuilder.Entity("PatiTakip.Models.Vaccination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateAdministered")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("NextDoseDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PetId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("VaccineName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId");
+
+                    b.ToTable("Vaccinations");
+                });
+
             modelBuilder.Entity("PatiTakip.Models.Veterinarian", b =>
                 {
                     b.Property<int>("Id")
@@ -87,6 +113,17 @@ namespace PatiTakip.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Veterinarians");
+                });
+
+            modelBuilder.Entity("PatiTakip.Models.Vaccination", b =>
+                {
+                    b.HasOne("PatiTakip.Models.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
                 });
 #pragma warning restore 612, 618
         }
